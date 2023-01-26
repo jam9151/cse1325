@@ -1,5 +1,3 @@
-
-
 public class MyPets{
     public static void main(String[] args){
         
@@ -14,8 +12,8 @@ public class MyPets{
 
         Pet myPets[] = {petOne, petTwo, petThree, petFour};
 
-        for(Pet mine: myPets){
-            System.out.println(mine);
+        for(Pet i: myPets){
+            System.out.println(i);
 
         }
         
