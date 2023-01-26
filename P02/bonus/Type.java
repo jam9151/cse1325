@@ -1,0 +1,1 @@
+public enum Type{Squirrel, Goat, Lama, Bear};
