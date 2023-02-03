@@ -10,21 +10,27 @@ public class Question{
     private static int nextQuestionNumber = 1;
 
     public Question(String question, String[] answers, int rightAnswer){
-        if (rightAnswer < 1 || rightAnswer > answer.length){
-            throw new IllegalArguementException("Right Answer must be greater or equal to 1 and less than the number of answers!\n");
+        if (rightAnswer < 1 || rightAnswer > answers.length){
+            throw new IllegalArgumentException("Right Answer must be greater or equal to 1 and less than the number of answers!\n");
          
         }else{
-            question.self = question;
-            answers.self = answers;
-            rightAnswer.self = rightAnswer;
-            questionNumber.self = nextQuestionNumber++;
-
-
-
+            this.question = question;
+            this.answers = answers;
+            this.rightAnswer = rightAnswer;
+            this.questionNumber = nextQuestionNumber++;
         }
     }
+    
+    //check this later
     public boolean checkAnswer(int answer){
         
+        if(answer == this.rightAnswer){
+            return true;
+
+        }
+        else{
+            return false;
+        }
 
     }
 
