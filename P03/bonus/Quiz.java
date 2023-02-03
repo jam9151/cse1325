@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Quiz{
     
-    private Question[] questions = new Question[2];
+    private Question[] questions = new Question[5];
 
     public Quiz(){
         loadQuiz();
@@ -23,7 +23,20 @@ public class Quiz{
         String[] secondAnswer = {"python", "C", "C++", "Java"};
         int secondRightAnswer = 4;
         
+        //question 3
+        String thirdQuestion = "Who created Linux?";
+        String[] thirdAnswer = {"Linus Torvald", "Jeff Bezos", "Elon Musk", "Mark Zukerberg"};
+        int thirdRightAnswer = 1;
         
+        //question 4
+        String fourthQuestion = "What does print(Hello World) do in Java?))";
+        String[] fourthAnswer = {"Nothing", "Prints Hello World", "Prints ABCD", "Shuts down OS"};
+        int fourthRightAnswer = 1;
+        
+        //question 5
+        String fifthQuestion = "How do you print to System.err?";
+        String[] fifthAnswer = {"System.err.println()", "err.println()", "System.err()", "println()"};
+        int fifthRightAnswer = 1;
 
 
 
@@ -32,7 +45,11 @@ public class Quiz{
         
         this.questions[1] = new Question(secondQuestion, secondAnswer, secondRightAnswer);
         
+        this.questions[2] = new Question(thirdQuestion, thirdAnswer, thirdRightAnswer);
         
+        this.questions[3] = new Question(fourthQuestion, fourthAnswer, fourthRightAnswer);
+        
+        this.questions[4] = new Question(fifthQuestion, fifthAnswer, fifthRightAnswer);
 
         // Question firstQuestion = new Question();
         
@@ -71,7 +88,7 @@ public class Quiz{
 
         }
 
-        double totalGrade = gradeCounter / 2;
+        double totalGrade = gradeCounter / 5;
 
 
 
