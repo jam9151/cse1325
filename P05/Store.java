@@ -18,6 +18,7 @@ public class Store {
         return this.customers.toArray();
     }
     
+    
     // ///////////////////////////////////////////////////////////
     // Options
     
@@ -47,7 +48,7 @@ public class Store {
     // public Object[] orders() {
     //     return this.orders.toArray();
     // }
-
+    
     // // ///////////////////////////////////////////////////////////
     // // Fields
     

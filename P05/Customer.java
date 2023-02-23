@@ -10,27 +10,26 @@ public class Customer{
         if((email.contains(".") && email.contains("@")) == false){
             throw new IllegalArgumentException("Customer Email Invalid");
         }
-        this.email = email;
-
-        
-
-        
-        
+        this.email = email; 
     }
-
     public String toString(){
-        return (name + "(" + email + ")");
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append("("+email+")");
+        String s = sb.toString();
+        return s;
     }
-
     public boolean equals(Object o){
         if(this == o){
             return true;
         }
-        else{
+        
+        if((o == null) || !(o instanceof Customer)){
             return false;
         }
+
+        Customer c = (Customer) o;
+        return email.equals(c.email);
+
     }
-
-
-
 }
