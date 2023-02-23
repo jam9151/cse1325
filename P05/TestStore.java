@@ -37,24 +37,24 @@ public class TestStore {
         }
         vector <<= 1;
 
-        // // Test Computer
-        // Object[] computers = new Object[]{
-        //     new Computer("SuperCalc", "1Z200XL")
-        // };
-        // Computer c = (Computer) computers[0];
-        // c.addOption((Option) options[0]);
+        // Test Computer
+        Object[] computers = new Object[]{
+            new Computer("SuperCalc", "1Z200XL")
+        };
+        Computer c = (Computer) computers[0];
+        c.addOption((Option) options[0]);
 
-        // c = new Computer("SuperCalc", "1Z200XL");
-        // c.addOption((Option) options[0]);       
-        // store.add(c);
-        // if(!deepEqualsComputer(computers, store.computers())) {
-        //     System.err.printf(failFormat, "Computer",
-        //         Arrays.toString(computers),
-        //         Arrays.toString(store.computers())
-        //     );
-        //     result |= vector;
-        // }
-        // vector <<= 1;
+        c = new Computer("SuperCalc", "1Z200XL");
+        c.addOption((Option) options[0]);       
+        store.add(c);
+        if(!deepEqualsComputer(computers, store.computers())) {
+            System.err.printf(failFormat, "Computer",
+                Arrays.toString(computers),
+                Arrays.toString(store.computers())
+            );
+            result |= vector;
+        }
+        vector <<= 1;
         
         // // Test Order
         // Object[] orders = new Object[]{

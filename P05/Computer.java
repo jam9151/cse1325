@@ -44,7 +44,7 @@ public class Computer{
 
         Computer a = (Computer) o;
         // if(name.equals(a.name) && model.equals(a.model)){
-        if(this.equals(a)){
+        if(this.toString().equals(a.toString())){
             return true;
         }else{return false;}
     }
