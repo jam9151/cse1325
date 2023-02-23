@@ -20,14 +20,14 @@ public class Store {
     
     
     // ///////////////////////////////////////////////////////////
-    // Options
+    //Options
     
-    // public void add(Option option) {
-    //     if(!options.contains(option)) options.add(option);
-    // }
-    // public Object[] options() {
-    //     return this.options.toArray();
-    // }
+    public void add(Option option) {
+        if(!options.contains(option)) options.add(option);
+    }
+    public Object[] options() {
+        return this.options.toArray();
+    }
     
     // // ///////////////////////////////////////////////////////////
     // // Computers
@@ -48,13 +48,13 @@ public class Store {
     // public Object[] orders() {
     //     return this.orders.toArray();
     // }
-    
+
     // // ///////////////////////////////////////////////////////////
     // // Fields
     
     private String name;
     private ArrayList<Customer> customers = new ArrayList<>();
-    // private ArrayList<Option> options = new ArrayList<>();
+    private ArrayList<Option> options = new ArrayList<>();
     // private ArrayList<Computer> computers = new ArrayList<>();
     // private ArrayList<Order> orders = new ArrayList<>();
 }

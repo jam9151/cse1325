@@ -24,18 +24,18 @@ public class TestStore {
         vector <<= 1;
 
         // // Test Option
-        // Object[] options = new Object[]{
-        //     new Option("Mainboard", 20000)
-        // };
-        // store.add(new Option("Mainboard", 20000));
-        // if(!deepEqualsOption(options, store.options())) {
-        //     System.err.printf(failFormat, "Option",
-        //         Arrays.toString(options),
-        //         Arrays.toString(store.options())
-        //     );
-        //     result |= vector;
-        // }
-        // vector <<= 1;
+        Object[] options = new Object[]{
+            new Option("Mainboard", 20000)
+        };
+        store.add(new Option("Mainboard", 20000));
+        if(!deepEqualsOption(options, store.options())) {
+            System.err.printf(failFormat, "Option",
+                Arrays.toString(options),
+                Arrays.toString(store.options())
+            );
+            result |= vector;
+        }
+        vector <<= 1;
 
         // // Test Computer
         // Object[] computers = new Object[]{
@@ -98,17 +98,17 @@ public class TestStore {
         }
     }
     
-    // private static boolean deepEqualsOption(Object[] a, Object[] b) {
-    //     try {
-    //         if(a.length != b.length) return false;
-    //         for(int i=0; i < a.length; ++i) {
-    //             if(!((Option) a[i]).equals((Option) b[i])) return false;
-    //         }
-    //         return true;
-    //     } catch (Exception e) {
-    //         return false;
-    //     }
-    // }
+    private static boolean deepEqualsOption(Object[] a, Object[] b) {
+        try {
+            if(a.length != b.length) return false;
+            for(int i=0; i < a.length; ++i) {
+                if(!((Option) a[i]).equals((Option) b[i])) return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     // private static boolean deepEqualsComputer(Object[] a, Object[] b) {
     //     try {
