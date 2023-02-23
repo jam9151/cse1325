@@ -16,6 +16,7 @@ public class Option{
     public long cost(){
         return (cost / 100);
     }
+    @Override
     public String toString(){
 
         StringBuilder sb = new StringBuilder();

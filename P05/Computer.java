@@ -23,6 +23,7 @@ public class Computer{
         }
         return totalCost;
     }
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(""+name);
@@ -34,7 +35,7 @@ public class Computer{
         return concatString;
     }
     public boolean equals(Object o){
-         if(this == o){
+        if(this == o){
             return true;
         }
         
