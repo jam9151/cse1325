@@ -1,4 +1,4 @@
-
+//Written by Jesse McNary 1001942779
 public class Option{
     protected String name;
     protected long cost;

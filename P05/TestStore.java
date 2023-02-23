@@ -110,17 +110,17 @@ public class TestStore {
         }
     }
 
-    // private static boolean deepEqualsComputer(Object[] a, Object[] b) {
-    //     try {
-    //         if(a.length != b.length) return false;
-    //         for(int i=0; i < a.length; ++i) {
-    //             if(!((Computer) a[i]).equals((Computer) b[i])) return false;
-    //         }
-    //         return true;
-    //     } catch (Exception e) {
-    //         return false;
-    //     }
-    // }
+    private static boolean deepEqualsComputer(Object[] a, Object[] b) {
+        try {
+            if(a.length != b.length) return false;
+            for(int i=0; i < a.length; ++i) {
+                if(!((Computer) a[i]).equals((Computer) b[i])) return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     // private static boolean deepEqualsOrder(Object[] a, Object[] b) {
     //     try {

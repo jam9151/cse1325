@@ -32,12 +32,12 @@ public class Store {
     // // ///////////////////////////////////////////////////////////
     // // Computers
     
-    // public void add(Computer computer) {
-    //     if(!computers.contains(computer)) computers.add(computer);
-    // }
-    // public Object[] computers() {
-    //     return this.computers.toArray();
-    // }
+    public void add(Computer computer) {
+        if(!computers.contains(computer)) computers.add(computer);
+    }
+    public Object[] computers() {
+        return this.computers.toArray();
+    }
     
     // // ///////////////////////////////////////////////////////////
     // // Orders
@@ -55,6 +55,6 @@ public class Store {
     private String name;
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Option> options = new ArrayList<>();
-    // private ArrayList<Computer> computers = new ArrayList<>();
+    private ArrayList<Computer> computers = new ArrayList<>();
     // private ArrayList<Order> orders = new ArrayList<>();
 }
