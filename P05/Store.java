@@ -42,12 +42,12 @@ public class Store {
     // // ///////////////////////////////////////////////////////////
     // // Orders
     
-    // public void add(Order order) {
-    //     if(!orders.contains(order)) orders.add(order);
-    // }
-    // public Object[] orders() {
-    //     return this.orders.toArray();
-    // }
+    public void add(Order order) {
+        if(!orders.contains(order)) orders.add(order);
+    }
+    public Object[] orders() {
+        return this.orders.toArray();
+    }
 
     // // ///////////////////////////////////////////////////////////
     // // Fields
@@ -56,5 +56,5 @@ public class Store {
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Option> options = new ArrayList<>();
     private ArrayList<Computer> computers = new ArrayList<>();
-    // private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<Order> orders = new ArrayList<>();
 }

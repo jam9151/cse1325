@@ -19,7 +19,7 @@ public class Order{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Order" + orderNumber + "for" + customer + "\n");
+        sb.append("\nOrder " + orderNumber + " for " + customer + "\n");
         
         for(Computer i: computers){
             sb.append(i);
@@ -38,20 +38,15 @@ public class Order{
         }
 
         Order a = (Order) o;
+        boolean isSame = false;
         // if(name.equals(a.name) && model.equals(a.model)){
-        
-        
-        boolean isSame = true;
-        int size = a.computer.size();
-        
-        for(i = 0; i < size; i++){
-            if (!(computers.get(i) ==a.computers.get(i))){
-                isSame = false;
-            }
+        if(this.customer == a.customer){
+            isSame = true;
+        }else{
+            
+            return false;
         }
-        if(!(this.customer == a.customer && isSame)){
-           isSame = false; 
-        }
+        isSame = (this.computers).equals(a.computers);
         return isSame;
 
     }

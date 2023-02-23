@@ -26,7 +26,7 @@ public class Computer{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(""+name);
+        sb.append(""+name + " ("+model+")");
 
         for(Option i: options){
             sb.append("\n\t"+i);
