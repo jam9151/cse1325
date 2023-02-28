@@ -21,7 +21,7 @@ public class Option{
 
         StringBuilder sb = new StringBuilder();
         sb.append(name);
-        sb.append("("+cost+")");
+        sb.append(" ($"+cost+")");
         
         String s = sb.toString();
         return s;

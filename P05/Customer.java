@@ -16,7 +16,7 @@ public class Customer{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(name);
-        sb.append("("+email+")");
+        sb.append(" ("+email+")");
         String s = sb.toString();
         return s;
     }

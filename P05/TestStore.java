@@ -57,30 +57,54 @@ public class TestStore {
         vector <<= 1;
         
         // // Test Order
-        // Object[] orders = new Object[]{
-        //     new Order((Customer) customers[0])
-        // };
-        // Order o1 = (Order) orders[0];
-        // o1.addComputer((Computer) computers[0]);
+        Object[] orders = new Object[]{
+            new Order((Customer) customers[0])
+        };
+        Order o1 = (Order) orders[0];
+        o1.addComputer((Computer) computers[0]);
         
-        // Order o2 = new Order((Customer) customers[0]);
-        // o2.addComputer((Computer) computers[0]);                       
-        // store.add(o2);
+        Order o2 = new Order((Customer) customers[0]);
+        o2.addComputer((Computer) computers[0]);                       
+        store.add(o2);
                 
-        // if(!deepEqualsOrder(orders, store.orders())) {
-        //     System.err.printf(failFormat, "Order",
-        //         Arrays.toString(orders),
-        //         Arrays.toString(store.orders())
-        //     );
-        //     result |= vector;
-        // }
-        // vector <<= 1;
+        if(!deepEqualsOrder(orders, store.orders())) {
+            System.err.printf(failFormat, "Order",
+                Arrays.toString(orders),
+                Arrays.toString(store.orders())
+            );
+            result |= vector;
+        }
+        vector <<= 1;
 
         // // Print result
-        // if (result != 0) {
-        //     System.err.println("FAIL: Error code " + result);
-        //     System.exit(result);
-        // }
+        if (result != 0) {
+            System.err.println("FAIL: Error code " + result);
+            System.exit(result);
+        }
+
+
+        //JAM testing
+        
+        System.out.println("Test Customer\n");
+        Customer jesse = new Customer("Jesse McNary", "mcnaryjesse@gmail.com");
+        System.out.println(jesse);
+
+        System.out.println("\nTest Option\n");
+        Option jesseOption = new Option("32GB RAM", 88);
+        System.out.println(jesseOption);
+
+        System.out.println("\nTest Computer\n");
+        Computer jesseComputer = new Computer("Rog Strix", "Ti1102");
+        jesseComputer.addOption(jesseOption);
+        System.out.println(jesseComputer);
+        
+        System.out.println("\nTest Order ");  
+        Order jesseOrder = new Order(jesse);
+        jesseOrder.addComputer(jesseComputer);
+        System.out.println(jesseOrder);
+
+
+
     }
     
     // These methods do a "deep compare" of two Object arrays
@@ -122,16 +146,16 @@ public class TestStore {
         }
     }
 
-    // private static boolean deepEqualsOrder(Object[] a, Object[] b) {
-    //     try {
-    //         if(a.length != b.length) return false;
-    //         for(int i=0; i < a.length; ++i) {
-    //             if(!((Order) a[i]).equals((Order) b[i])) return false;
-    //         }
-    //         return true;
-    //     } catch (Exception e) {
-    //         return false;
-    //     }
-    // }
+    private static boolean deepEqualsOrder(Object[] a, Object[] b) {
+        try {
+            if(a.length != b.length) return false;
+            for(int i=0; i < a.length; ++i) {
+                if(!((Order) a[i]).equals((Order) b[i])) return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
