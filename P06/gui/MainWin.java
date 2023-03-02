@@ -1,6 +1,7 @@
 package gui;
 import store.*;
 
+import java.util.*;
 import javax.swing.JFrame;           // for main window
 import javax.swing.JOptionPane;      // for standard dialogs
 // import javax.swing.JDialog;          // for custom dialogs (for alternate About dialog)
@@ -129,8 +130,7 @@ public class MainWin extends JFrame {
         String name = JOptionPane.showInputDialog("Computer Name");
         String model = JOptionPane.showInputDialog("Computer Name");
     
-        JComboBox cb = new JComboBox(store.options);
-    
+        JComboBox cb = new JComboBox<Option>((store.options()).toArray());
 
         }
 
