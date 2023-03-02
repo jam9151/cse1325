@@ -1,4 +1,5 @@
 package gui;
+import store.*;
 
 import javax.swing.JFrame;           // for main window
 import javax.swing.JOptionPane;      // for standard dialogs
@@ -29,8 +30,8 @@ import java.awt.Font;                // rich text in a JLabel or similar widget
 import java.awt.image.BufferedImage; // holds an image loaded from a file
 
 public class MainWin extends JFrame {
-    // private Store store;
-    // private JLabel display;
+    private Store store = new Store("Elsa");
+    private JLabel display;
     
     public MainWin(String title) {
         
@@ -99,11 +100,29 @@ public class MainWin extends JFrame {
         }
         
         protected void onInsertCustomerClick(){
+            String name = JOptionPane.showInputDialog("Customer name");
+            String email = JOptionPane.showInputDialog("Customer email");
+            
+            //JOptionPane.showMessageDialog(null, "Hello "+name + "\nYour email is " + email);
+            Customer customer = new Customer(name, email);
+            store.add(customer);
 
         }
 
         protected void onInsertOptionClick(){
+            String name = JOptionPane.showInputDialog("Option name");
+            String priceStr = JOptionPane.showInputDialog("Option price");
 
+            double price = Double.parseDouble(priceStr);
+            long priceLong = (long) price;
+    
+            priceLong = priceLong * 100;
+            JOptionPane.showMessageDialog(null, "Option "+name + "\nPrice" + priceLong);
+            Option option = new Option(name, priceLong);
+            store.add(option);
+
+
+ 
         }
         
         protected void onInsertComputerClick(){
