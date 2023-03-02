@@ -1,3 +1,4 @@
+package store;
 import java.util.Arrays; // A class filled with useful static methods related to classic arrays
 
 public class TestStore {
