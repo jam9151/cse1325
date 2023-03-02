@@ -16,6 +16,7 @@ import javax.swing.UIManager;        // to access default icons
 import javax.swing.JLabel;           // text or image holder
 import javax.swing.ImageIcon;        // holds a custom icon
 import javax.swing.SwingConstants;   // useful values for Swing method calls
+import javax.swing.JComboBox;
 
 import javax.imageio.ImageIO;        // loads an image from a file
 
@@ -121,13 +122,18 @@ public class MainWin extends JFrame {
             Option option = new Option(name, priceLong);
             store.add(option);
 
-
- 
         }
         
         protected void onInsertComputerClick(){
+        
+        String name = JOptionPane.showInputDialog("Computer Name");
+        String model = JOptionPane.showInputDialog("Computer Name");
+    
+        JComboBox cb = new JComboBox(store.options);
+    
 
         }
+
 
         protected void onViewClick(Record r){
 
