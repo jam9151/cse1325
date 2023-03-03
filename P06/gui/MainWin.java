@@ -1,7 +1,8 @@
 package gui;
-import store.*;
 
+import store.*;
 import java.util.*;
+
 import javax.swing.JFrame;           // for main window
 import javax.swing.JOptionPane;      // for standard dialogs
 // import javax.swing.JDialog;          // for custom dialogs (for alternate About dialog)
@@ -128,9 +129,32 @@ public class MainWin extends JFrame {
         protected void onInsertComputerClick(){
         
         String name = JOptionPane.showInputDialog("Computer Name");
-        String model = JOptionPane.showInputDialog("Computer Name");
-    
-        JComboBox cb = new JComboBox<Option>((store.options()).toArray());
+        String model = JOptionPane.showInputDialog("Computer Model");
+        Computer computer = new Computer(name, model);
+       
+        JComboBox cb = new JComboBox<Object>(store.options());
+        int input = 0;
+        while (input != JOptionPane.CANCEL_OPTION){
+            input = JOptionPane.showConfirmDialog(null,cb, "Choose options", JOptionPane.OK_CANCEL_OPTION);
+		    if (input == JOptionPane.OK_OPTION){
+                computer.addOption((Option)cb.getSelectedItem());
+            }
+            System.out.println(computer);
+            
+            
+        }
+        
+       
+        
+        
+
+        // while(input != )
+        //int input = JOptionPane.showConfirmDialog(this, cb, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // Option choice = cb.getSelectedObjects();
+
+        
+        
 
         }
 
