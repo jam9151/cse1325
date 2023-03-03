@@ -34,7 +34,7 @@ import java.awt.image.BufferedImage; // holds an image loaded from a file
 
 public class MainWin extends JFrame {
     private Store store = new Store("Elsa");
-    private JLabel display;
+    private JLabel display = new JLabel();
     
     public MainWin(String title) {
         
@@ -97,164 +97,11 @@ public class MainWin extends JFrame {
 
         setVisible(true);
 
-    }
-        protected void onQuitClick(){
-            System.exit(0);
-        }
-        
-        protected void onInsertCustomerClick(){
-            
-            try{
-                String name = JOptionPane.showInputDialog(this,"Customer name");
-                String email = JOptionPane.showInputDialog(this,"Customer email");
-                
-                //JOptionPane.showMessageDialog(null, "Hello "+name + "\nYour email is " + email);
-                Customer customer = new Customer(name, email);
-                store.add(customer);
-            }catch(IllegalArgumentException e){
-                System.err.println(e.getMessage());
-            }
-            
-        }
-
-        protected void onInsertOptionClick(){
-            String name = JOptionPane.showInputDialog(this,"Option name");
-            String priceStr = JOptionPane.showInputDialog(this,"Option price");
-
-            double price = Double.parseDouble(priceStr);
-            long priceLong = (long) price;
-    
-            priceLong = priceLong * 100;
-            JOptionPane.showMessageDialog(this, "Option "+name + "\nPrice" + priceLong);
-            Option option = new Option(name, priceLong);
-            store.add(option);
-
-        }
-        
-        protected void onInsertComputerClick(){
-            
-            String name = JOptionPane.showInputDialog(this,"Computer Name");
-            String model = JOptionPane.showInputDialog(this,"Computer Model");
-            Computer computer = new Computer(name, model);
-        
-            JComboBox cb = new JComboBox<Object>(store.options());
-            int input = 0;
-            while (input != JOptionPane.CANCEL_OPTION){
-                
-                input = JOptionPane.showConfirmDialog(this,cb, "Select Options", JOptionPane.OK_CANCEL_OPTION);
-                if (input == JOptionPane.OK_OPTION){
-                    computer.addOption((Option)cb.getSelectedItem());
-                }
-                // System.out.println(computer)   
-            }        
-
-        }
-
-
-        protected void onViewClick(Record r){
-            String header;
-            
-            JLabel custLabel = new JLabel();
-
-            JLabel optionHeader = new JLabel();
-        
-            if(r == Record.CUSTOMER){
-                optionHeader.setVisible(false);
-                custLabel.setVisible(true);
-                
-                Object[] cust = store.customers();
-                header = "Customers of Elsa";
-                
-                
-                
-                StringBuilder custSb = new StringBuilder();
-                custSb.append("<html>\n"
-                +"\n<p><font size=+2> " + header + "</font></p>\n"
-                +"</br>");
-
-                // custLabel.setVisible(false);                    
-                // String a = optionHeader.getText();
-                    
-
-                for (Object i: cust){
-                    // String a = optionHeader.getText();
-                   custSb.append("\n  <li> " + i + "</li>");
-                }                    
-                custSb.append("\n</ol>" + "\n</html>");    
-                    
-                custLabel.setText(custSb.toString());
-                System.out.println(custSb.toString());
-                add(custLabel);
-            }else if(r == Record.OPTION){
-                custLabel.setVisible(false);
-
-                optionHeader.setVisible(true);
-                Object[] opt = store.options();
-                header = "Options for Computers";
-                    
-                StringBuilder a = new StringBuilder();
-                a.append("<html>\n"
-                +"\n<p><font size=+2> " + header + "</font></p>\n"
-                +"</br>");
-                
-
-                // String a = optionHeader.getText();
-                    
-                for (Object i: opt){
-                    // String a = optionHeader.getText();
-                   a.append("\n  <li> " + i + "</li>");
-                }
-                a.append("\n</ol>" + "\n</html>");    
-                    
-                optionHeader.setText(a.toString());
-                System.out.println(a.toString());
-                add(optionHeader);
-            
-            }else if (r == Record.COMPUTER){
-                
-                Object[] comp = store.computers(); 
-                header = "Computers";
-            }else if (r == Record.ORDER){
-                
-                Object[] ord = store.orders();  
-                header = "Orders";
-            }
-            
-                
-
-        }
-            
-
-
-        protected void onAboutClick(){
-
-        }
-
-    
-
-        // JMenuItem anew       = new JMenuItem("New ELSA");
-
-        // JMenuItem rules      = new JMenuItem("Rules");
-     
-
-        // anew .addActionListener(event -> onNewGameClick());
-        
-        // rules.addActionListener(event -> onRulesClick());
-        
-
-        
-        // file.add(anew);
-        // file.add(quit);
-        // help.add(rules);
-        // help.add(about);
-        
-        
-        
         // ///////////// //////////////////////////////////////////////////////////
         // T O O L B A R
-        // Add a toolbar to the PAGE_START region below the menu
-        // JToolBar toolbar = new JToolBar("ELSA Controls");
-
+        //Add a toolbar to the PAGE_START region below the menu
+        JToolBar toolbar = new JToolBar("ELSA BAR");
+        
         // Add a New Game stock icon
         // JButton anewB  = new JButton(UIManager.getIcon("FileView.fileIcon"));
         //   anewB.setActionCommand("New Game");
@@ -308,26 +155,172 @@ public class MainWin extends JFrame {
         //   quitB.addActionListener(event -> onQuitClick());
         // toolbar.addSeparator();
 
-        // getContentPane().add(toolbar, BorderLayout.PAGE_START);
-        
-        
-        // /////////////////////////// ////////////////////////////////////////////
-        // S T I C K S   D I S P L A Y
-        // Provide a text entry box to show the remaining sticks
-        // sticks = new JLabel();
-        // sticks.setFont(new Font("SansSerif", Font.BOLD, 18));
-        // add(sticks, BorderLayout.CENTER);
+        // getContentPane().add(toolbar, BorderLayout.PAGE_START
 
-        // S T A T U S   B A R   D I S P L A Y ////////////////////////////////////
-        // Provide a status bar for game messages
-        // msg = new JLabel();
-        // add(msg, BorderLayout.PAGE_END);
+    }
+        protected void onQuitClick(){
+            System.exit(0);
+        }
         
-        // Make everything in the JFrame visible
-        // setVisible(true);
+        protected void onInsertCustomerClick(){
+            
+            try{
+                String name = JOptionPane.showInputDialog(this,"Customer name");
+                String email = JOptionPane.showInputDialog(this,"Customer email");
+                
+                //JOptionPane.showMessageDialog(null, "Hello "+name + "\nYour email is " + email);
+                Customer customer = new Customer(name, email);
+                store.add(customer);
+            }catch(IllegalArgumentException e){
+                System.err.println(e.getMessage());
+            }
+            
+        }
+
+        protected void onInsertOptionClick(){
+            String name = JOptionPane.showInputDialog(this,"Option name");
+            String priceStr = JOptionPane.showInputDialog(this,"Option price");
+
+            double price = Double.parseDouble(priceStr);
+            long priceLong = (long) price;
+    
+            priceLong = priceLong * 100;
+            //JOptionPane.showMessageDialog(this, "Option "+name + "\nPrice " + priceLong);
+            Option option = new Option(name, priceLong);
+            store.add(option);
+
+        }
         
-        // Start a new game
-        // onNewGameClick();
+        protected void onInsertComputerClick(){
+            
+            String name = JOptionPane.showInputDialog(this,"Computer Name");
+            String model = JOptionPane.showInputDialog(this,"Computer Model");
+            Computer computer = new Computer(name, model);
+        
+            JComboBox cb = new JComboBox<Object>(store.options());
+            int input = 0;
+            while (input != JOptionPane.CANCEL_OPTION){
+                
+                input = JOptionPane.showConfirmDialog(this,cb, "Select Options", JOptionPane.OK_CANCEL_OPTION);
+                if (input == JOptionPane.OK_OPTION){
+                    computer.addOption((Option)cb.getSelectedItem());
+                }
+
+                //System.out.println(computer);   
+            }
+            store.add(computer);        
+
+        }
+
+
+        protected void onViewClick(Record r){
+            String header;
+
+            this.display.setText(" ");
+            if(r == Record.CUSTOMER){
+                // optionHeader.setVisible(false);
+                // custLabel.setVisible(true);
+                
+
+                Object[] cust = store.customers();
+                header = "Customers of Elsa";
+                
+                
+                
+                StringBuilder custSb = new StringBuilder();
+                custSb.append("<html>\n"
+                +"\n<p><font size=+2> " + header + "</font></p>\n"
+                +"</br>");
+                for (Object i: cust){
+                    // String a = optionHeader.getText();
+                   custSb.append("\n  <li> " + i + "</li>");
+                }                    
+                custSb.append("\n</ol>" + "\n</html>");    
+                    
+                display.setText(custSb.toString());
+                System.out.println(custSb.toString());
+                add(display);
+            }else if(r == Record.OPTION){
+                
+                Object[] opt = store.options();
+                header = "Options for Computers";
+                    
+                StringBuilder a = new StringBuilder();
+                a.append("<html>\n"
+                +"\n<p><font size=+2> " + header + "</font></p>\n"
+                +"</br>");
+                
+
+                // String a = optionHeader.getText();
+                    
+                for (Object i: opt){
+                    // String a = optionHeader.getText();
+                   a.append("\n  <li> " + i + "</li>");
+                }
+                a.append("\n</ol>" + "\n</html>");    
+                    
+                display.setText(a.toString());
+                System.out.println(a.toString());
+                add(display);
+            
+            }else if (r == Record.COMPUTER){
+                
+                Object[] comp = store.computers();
+                System.out.println(comp);
+                header = "Computers";
+                    
+                StringBuilder b = new StringBuilder();
+                
+                b.append("<html>\n"
+                +"\n<p><font size=+2> " + header + "</font></p>\n"
+                +"</br>");
+            
+                // String a = optionHeader.getText();
+                    
+                for (Object i: comp){
+                    // String a = optionHeader.getText();
+                   b.append("\n  <li> " + i + "</li>");
+                }
+                b.append("\n</ol>" + "\n</html>");    
+                
+                display.setText(b.toString());
+                System.out.println(b.toString());
+                add(display);
+
+
+            }else if (r == Record.ORDER){
+                header = "Orders";
+                Object[] ord = store.orders();  
+                
+                StringBuilder a = new StringBuilder();
+                a.append("<html>\n"
+                +"\n<p><font size=+2> " + header + "</font></p>\n"
+                +"</br>");
+                // String a = optionHeader.getText();
+                    
+                for (Object i: ord){
+                    // String a = optionHeader.getText();
+                   a.append("\n  <li> " + i + "</li>");
+                   System.out.println(i);
+                }
+                a.append("\n</ol>" + "\n</html>");    
+                    
+                display.setText(a.toString());
+                System.out.println(a.toString());
+                add(display);
+                
+                
+            }
+            
+                
+
+        }
+            
+
+
+        protected void onAboutClick(){
+
+        }
     }
     
     // Listeners

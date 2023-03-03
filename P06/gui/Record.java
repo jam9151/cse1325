@@ -1,3 +1,3 @@
 package gui;
 
-public enum Record {CUSTOMER, OPTION,COMPUTER,ORDER};
+public enum Record {CUSTOMER, OPTION, COMPUTER, ORDER};
