@@ -1,3 +1,15 @@
+//https://icons8.com/icons/set/top-toolbar customer.jpg
+
+//https://www.123rf.com/clipart-vector/computer_ram.html options.jpg
+
+//http://clipart-library.com/clip-art/playground-silhouette-25.htm viewCustomer.png
+
+//https://create.vista.com/vectors/Computer-hardware/ viewOptions.jpg
+
+//https://www.deviantart.com/flat-icons/art/Flat-Shadow-Computer-Icon-Multiple-Colors-557618709 viewComputers
+
+
+
 package gui;
 
 import store.*;
@@ -35,6 +47,7 @@ import java.awt.image.BufferedImage; // holds an image loaded from a file
 public class MainWin extends JFrame {
     private Store store = new Store("Elsa");
     private JLabel display = new JLabel();
+    
     
     public MainWin(String title) {
         
@@ -102,61 +115,70 @@ public class MainWin extends JFrame {
         //Add a toolbar to the PAGE_START region below the menu
         JToolBar toolbar = new JToolBar("ELSA BAR");
         
-        // Add a New Game stock icon
-        // JButton anewB  = new JButton(UIManager.getIcon("FileView.fileIcon"));
-        //   anewB.setActionCommand("New Game");
-        //   anewB.setToolTipText("Create a new game, discarding any in progress");
-        //   anewB.setBorder(null);
-        //   toolbar.add(anewB);
-        //   anewB.addActionListener(event -> onNewGameClick());
+        //Insert Customer Button
+        ImageIcon i = new ImageIcon("gui/customer.jpg");      
         
-        // A "horizontal strut" is just a space of the specified pixel width
-        // toolbar.add(Box.createHorizontalStrut(25));
+        JButton buttonAddCustomer = new JButton(i);
+    
+        buttonAddCustomer.setActionCommand("Add New Customers");
+        buttonAddCustomer.setToolTipText("Use this to add a name and email for a new customer!");
+        buttonAddCustomer.addActionListener(event -> onInsertCustomerClick());
+        toolbar.add(buttonAddCustomer);
         
-        // Create the 3 buttons using the icons provided
-        // ImageIcon ii = new ImageIcon("button1.png");
-        // button1  = new JButton(new ImageIcon("button1.png"));
-        //   button1.setActionCommand("Select one stick");
-        //   button1.setToolTipText("Select one stick");
-        //   toolbar.add(button1);
-        //   button1.addActionListener(event -> onButtonClick(1));
+        toolbar.add(Box.createHorizontalStrut(10));
 
-        // button2    = new JButton(new ImageIcon("button2.png"));
-        //   button2.setActionCommand("Select two sticks");
-        //   button2.setToolTipText("Select two sticks");
-        //   toolbar.add(button2);
-        //   button2.addActionListener(event -> onButtonClick(2));
-
-        // button3 = new JButton(new ImageIcon("button3.png"));
-        //   button3.setActionCommand("Select three sticks");
-        //   button3.setToolTipText("Select three sticks");
-        //   toolbar.add(button3);
-        //   button3.addActionListener(event -> onButtonClick(3));
+        //Insert Option Button
+        ImageIcon ii = new ImageIcon("gui/options.jpg");
+        JButton buttonAddOption = new JButton(ii);
+        buttonAddOption.setActionCommand("Add New Options");
+        buttonAddOption.setToolTipText("Use this to add option name and price");
+        buttonAddOption.addActionListener(event -> onInsertOptionClick());
+        toolbar.add(buttonAddOption);
         
-        // toolbar.add(Box.createHorizontalStrut(25));
+        toolbar.add(Box.createHorizontalStrut(10));
+
+        //Insert Computer Button
+        ImageIcon iii = new ImageIcon("gui/computer.png");
+        JButton buttonAddComputer = new JButton(iii);
+        buttonAddComputer.setActionCommand("Add New Computer");
+        buttonAddComputer.setToolTipText("Use this to add a computers name, model and options");
+        buttonAddComputer.addActionListener(event -> onInsertComputerClick());
+        toolbar.add(buttonAddComputer);
         
-        // Create a toggle button to enable or disable the computer player
-        // computerPlayer = new JToggleButton(new ImageIcon("freepik_robot.png"));
-        //   computerPlayer.setActionCommand("Enable computer player");
-        //   computerPlayer.setToolTipText("Enable computer to be Player 2");
-        //   computerPlayer.setBorder(null);
-        //   toolbar.add(computerPlayer);
-        //   computerPlayer.addActionListener(event -> onComputerPlayerClick());
-
-        // "Horizontal glue" expands as much as possible, pushing the "X" to the right
-        // toolbar.add(Box.createHorizontalGlue());
+        toolbar.add(Box.createHorizontalStrut(30));
+        //View Customer Button
+        ImageIcon iv = new ImageIcon("gui/viewCustomer.png");
         
-        // Create a custom Quit button (not available in Swing stock icons)
-        // JButton quitB  = new JButton("X");
-        //   quitB.setActionCommand("Quit");
-        //   quitB.setToolTipText("Exit ELSA");
-        //   quitB.setBorder(null);
-        //   toolbar.add(quitB);
-        //   quitB.addActionListener(event -> onQuitClick());
-        // toolbar.addSeparator();
+        JButton buttonViewCustomer = new JButton(iv);    
+        buttonViewCustomer.setActionCommand("View All Customers");
+        buttonViewCustomer.addActionListener(event -> onViewClick(Record.CUSTOMER));
+        buttonViewCustomer.setToolTipText("Use this to view all current customers");
+        toolbar.add(buttonViewCustomer);
 
-        // getContentPane().add(toolbar, BorderLayout.PAGE_START
+        toolbar.add(Box.createHorizontalStrut(10));
 
+        
+        //View Options Button
+        ImageIcon v = new ImageIcon("gui/viewOptions.jpg");
+        JButton buttonViewOptions = new JButton(v);    
+        buttonViewOptions.setActionCommand("View All Options");
+        buttonViewOptions.addActionListener(event -> onViewClick(Record.OPTION));
+        buttonViewOptions.setToolTipText("Use this to view all computer options");
+        toolbar.add(buttonViewOptions);
+        
+        toolbar.add(Box.createHorizontalStrut(10));
+        
+        ImageIcon vi = new ImageIcon("gui/viewComputers.png");
+        JButton buttonViewComputers = new JButton(vi);    
+        buttonViewComputers.setActionCommand("View All Computers");
+        buttonViewComputers.addActionListener(event -> onViewClick(Record.COMPUTER));
+        buttonViewComputers.setToolTipText("Use this to view all current computers");
+        toolbar.add(buttonViewComputers);
+        
+        toolbar.add(Box.createHorizontalStrut(10));
+        
+        getContentPane().add(toolbar, BorderLayout.PAGE_START);
+    
     }
         protected void onQuitClick(){
             System.exit(0);
@@ -211,7 +233,6 @@ public class MainWin extends JFrame {
             store.add(computer);        
 
         }
-
 
         protected void onViewClick(Record r){
             String header;
@@ -315,8 +336,6 @@ public class MainWin extends JFrame {
                 
 
         }
-            
-
 
         protected void onAboutClick(){
 
