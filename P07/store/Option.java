@@ -1,6 +1,11 @@
 //Written by Jesse McNary 1001942779
-
 package store;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Option{
     protected String name;
     protected long cost;
@@ -13,6 +18,11 @@ public class Option{
             throw new IllegalArgumentException("The Cost must be a positive number or 0");
         }
         this.cost = cost;
+    }
+    
+    public void save(BufferedWriter bw) throws IOException{
+        bw.write(name + '\n');
+        bw.write("" + cost + '\n');
     }
 
     public long cost(){

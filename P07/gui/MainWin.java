@@ -1,19 +1,14 @@
-//https://icons8.com/icons/set/top-toolbar customer.jpg
-
-//https://www.123rf.com/clipart-vector/computer_ram.html options.jpg
-
-//http://clipart-library.com/clip-art/playground-silhouette-25.htm viewCustomer.png
-
-//https://create.vista.com/vectors/Computer-hardware/ viewOptions.jpg
-
-//https://www.deviantart.com/flat-icons/art/Flat-Shadow-Computer-Icon-Multiple-Colors-557618709 viewComputers
-
-
-
+//Jesse McNary 2023
 package gui;
 
 import store.*;
 import java.util.*;
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;           // for main window
 import javax.swing.JOptionPane;      // for standard dialogs
@@ -64,7 +59,14 @@ public class MainWin extends JFrame {
         
         JMenu     file = new JMenu("File");
         JMenuItem quit = new JMenuItem("Quit");
-        
+        JMenuItem newClick = new JMenuItem("New");
+        JMenuItem open = new JMenuItem("Open");
+        JMenuItem save = new JMenuItem("Save");
+        JMenuItem saveAs = new JMenuItem("Save As");
+
+
+
+
         JMenu     insert = new JMenu("Insert");
         JMenuItem customer  = new JMenuItem("Customer");
         JMenuItem option  = new JMenuItem("Option");   
@@ -80,9 +82,18 @@ public class MainWin extends JFrame {
         JMenu     help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
 
-        quit .addActionListener(event -> onQuitClick());
+        quit.addActionListener(event -> onQuitClick());
+        newClick.addActionListener(event -> onNewClick());
+        open.addActionListener(event -> onOpenClick());
+        save.addActionListener(event -> onSaveClick());
+        saveAs.addActionListener(event -> onSaveAsClick());
         file.add(quit);
+        file.add(newClick);
+        file.add(open);
+        file.add(save);
+        file.add(saveAs);
         
+
         customer.addActionListener(event -> onInsertCustomerClick());
         option.addActionListener(event -> onInsertOptionClick());
         computer.addActionListener(event -> onInsertComputerClick());
@@ -119,7 +130,7 @@ public class MainWin extends JFrame {
         JToolBar toolbar = new JToolBar("ELSA BAR");
         
         //Insert Customer Button
-        ImageIcon i = new ImageIcon("gui/customer.jpg");      
+        ImageIcon i = new ImageIcon("gui/toolbarPhotos/customer.jpg");      
         
         JButton buttonAddCustomer = new JButton(i);
     
@@ -131,7 +142,7 @@ public class MainWin extends JFrame {
         toolbar.add(Box.createHorizontalStrut(10));
 
         //Insert Option Button
-        ImageIcon ii = new ImageIcon("gui/options.jpg");
+        ImageIcon ii = new ImageIcon("gui/toolbarPhotos/options.jpg");
         JButton buttonAddOption = new JButton(ii);
         buttonAddOption.setActionCommand("Add New Options");
         buttonAddOption.setToolTipText("Use this to add option name and price");
@@ -141,7 +152,7 @@ public class MainWin extends JFrame {
         toolbar.add(Box.createHorizontalStrut(10));
 
         //Insert Computer Button
-        ImageIcon iii = new ImageIcon("gui/computer.png");
+        ImageIcon iii = new ImageIcon("gui/toolbarPhotos/computer.png");
         JButton buttonAddComputer = new JButton(iii);
         buttonAddComputer.setActionCommand("Add New Computer");
         buttonAddComputer.setToolTipText("Use this to add a computers name, model and options");
@@ -150,7 +161,7 @@ public class MainWin extends JFrame {
         
         toolbar.add(Box.createHorizontalStrut(30));
         //View Customer Button
-        ImageIcon iv = new ImageIcon("gui/viewCustomer.png");
+        ImageIcon iv = new ImageIcon("gui/toolbarPhotos/viewCustomer.png");
         
         JButton buttonViewCustomer = new JButton(iv);    
         buttonViewCustomer.setActionCommand("View All Customers");
@@ -162,7 +173,7 @@ public class MainWin extends JFrame {
 
         
         //View Options Button
-        ImageIcon v = new ImageIcon("gui/viewOptions.jpg");
+        ImageIcon v = new ImageIcon("gui/toolbarPhotos/viewOptions.jpg");
         JButton buttonViewOptions = new JButton(v);    
         buttonViewOptions.setActionCommand("View All Options");
         buttonViewOptions.addActionListener(event -> onViewClick(Record.OPTION));
@@ -171,18 +182,73 @@ public class MainWin extends JFrame {
         
         toolbar.add(Box.createHorizontalStrut(10));
         
-        ImageIcon vi = new ImageIcon("gui/viewComputers.png");
+        ImageIcon vi = new ImageIcon("gui/toolbarPhotos/viewComputers.png");
         JButton buttonViewComputers = new JButton(vi);    
         buttonViewComputers.setActionCommand("View All Computers");
         buttonViewComputers.addActionListener(event -> onViewClick(Record.COMPUTER));
         buttonViewComputers.setToolTipText("Use this to view all current computers");
         toolbar.add(buttonViewComputers);
         
+        toolbar.add(Box.createHorizontalStrut(30));
+
+        ImageIcon vii = new ImageIcon("gui/toolbarPhotos/new.jpg");
+        JButton buttonNew = new JButton(vii);    
+        buttonNew.setActionCommand("New Store");
+        buttonNew.addActionListener(event -> onNewClick());
+        buttonNew.setToolTipText("Use to create a new Store");
+        toolbar.add(buttonNew);
+        
         toolbar.add(Box.createHorizontalStrut(10));
+
+        ImageIcon viii = new ImageIcon("gui/toolbarPhotos/open.png");
+        JButton buttonOpen = new JButton(viii);    
+        buttonOpen.setActionCommand("Open Existing Store Data");
+        buttonOpen.addActionListener(event -> onOpenClick());
+        buttonOpen.setToolTipText("Use this to open existing store files");
+        toolbar.add(buttonOpen);
+        
+        toolbar.add(Box.createHorizontalStrut(10));
+
+        ImageIcon ix = new ImageIcon("gui/toolbarPhotos/save.png");
+        JButton buttonSave = new JButton(ix);    
+        buttonSave.setActionCommand("Save Current Store Data");
+        buttonSave.addActionListener(event -> onSaveClick());
+        buttonSave.setToolTipText("Use this to save current Store Data");
+        toolbar.add(buttonSave);
+        
+        toolbar.add(Box.createHorizontalStrut(10));
+
+        ImageIcon xx = new ImageIcon("gui/toolbarPhotos/saveAs.png");
+        JButton buttonSaveAs = new JButton(xx);    
+        buttonViewOptions.setActionCommand("Save as File Name");
+        buttonViewOptions.addActionListener(event -> onSaveAsClick());
+        buttonViewOptions.setToolTipText("Use this to save current store data with prefered name ");
+        toolbar.add(buttonSaveAs);
+        
+        
+
         
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
     
     }
+        protected void onNewClick(){
+
+        }
+        protected void onOpenClick(){
+
+        }
+        protected void onSaveClick(){
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("io/testStore.txt"))) {
+                store.save(bw);
+            } catch (Exception e) {
+                System.err.println("Failed to write: " + e); System.exit(-1);
+            }
+        }
+        protected void onSaveAsClick(){
+  
+        }
+
+
         protected void onQuitClick(){
             System.exit(0);
         }
@@ -357,6 +423,7 @@ public class MainWin extends JFrame {
             JLabel artists = new JLabel("<html>"
             + "<br/><p>Copyright 2023 by Jesse McNary</p>"
             + "<p>Licensed under the Apache License, Version 2.0</p><br/>"
+            + "<p>Logo Image with the help of George F Rice</p><p>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</p><br>"
             + "<p></p>"
             + "<p><font size=-2></font></p>"
             + "<p>Customer Toolbar Image</p><p>https://icons8.com/icons/set/top-toolbar</p><br>"
@@ -364,18 +431,15 @@ public class MainWin extends JFrame {
             + "<p>View Customer Toolbar Image</p><p>clipart-library.com/clip-art/playground-silhouette-25.htmr</p><br>"
             + "<p>View Options Toolbar Image</p><p>https://create.vista.com/vectors/Computer-hardware/</p><br>"
             + "<p>View Computer Toolbar Image</p><p>https://www.deviantart.com/flat-icons/art/Flat-Shadow-Computer-Icon-Multiple-Colors-557618709</p><br>"
-            + "<p>Logo Image with the help of George F Rice</p><p>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</p><br>"
+            + "<p>New Store Toolbar Image</p><p>https://iconarchive.com/show/paradise-icons-by-fixicon/toolbar-folder-add-icon.html</p><br>"
+            + "<p>Open File Toolbar Image</p><p>https://freeiconshop.com/icon/folder-open-icon-outline-filled/</p><br>"
+            + "<p>Save Toolbar Image</p><p>//https://www.flaticon.com/free-icon/save-file_4856668 </p><br>"
+            + "<p>Save As Toolbar Image</p><p>https://icons8.com/icon/13280/save-as</p><br>"
             + "<p><font size=-2></font></p>"
             + "</html>");
             
             JOptionPane.showMessageDialog(this, new Object[]{logo,title,artists},"ELSA", JOptionPane.PLAIN_MESSAGE);
-            //JOptionPane.showMessageDialog(this, logo, title, artists,"ELSA", JOptionPane.PLAIN_MESSAGE);
-          
-        //  JOptionPane.showMessageDialog(this, 
-        //      new Object[]{logo, title, artists},
-        //      "The Game of Nim",
-        //      JOptionPane.PLAIN_MESSAGE
-        //  );
+            
         }  
     }
     

@@ -1,5 +1,10 @@
 //Written by Jesse McNary 1001942779
 package store;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Computer{
@@ -12,6 +17,14 @@ public class Computer{
         
         this.name = name;
         this.model = model;
+    }
+    public void save(BufferedWriter bw) throws IOException{
+        bw.write(name + '\n');
+        bw.write(model + '\n');
+        bw.write(options.size() + '\n');
+        for(Option i : options){
+            i.save(bw);
+        }
     }
     public void addOption(Option option){
         options.add(option);

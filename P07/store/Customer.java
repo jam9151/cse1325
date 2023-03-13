@@ -1,5 +1,11 @@
 //Written by Jesse McNary 1001942779
 package store;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Customer{
     
     
@@ -13,6 +19,14 @@ public class Customer{
         }
         this.email = email; 
     }
+    
+    
+    public void save(BufferedWriter bw) throws IOException{
+        bw.write(name + '\n');
+        bw.write(email + '\n');
+    }
+
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

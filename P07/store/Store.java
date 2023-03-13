@@ -1,5 +1,11 @@
 package store;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Store {
     public Store(String name) {
@@ -43,11 +49,35 @@ public class Store {
     // // ///////////////////////////////////////////////////////////
     // // Orders
     
-    public void add(Order order) {
+    public void add(Order order){
         if(!orders.contains(order)) orders.add(order);
     }
     public Object[] orders() {
         return this.orders.toArray();
+    }
+    
+    public void save(BufferedWriter bw) throws IOException{
+        bw.write(name + '\n');
+        if(customers.size()!=0){
+            bw.write(customers.size() + '\n');
+            for(Customer i : customers){
+                i.save(bw);
+            }
+        }
+        if(options.size() != 0){
+            bw.write(options.size() + '\n');
+            for(Option j : options){
+                j.save(bw);
+            }
+        }
+        if(computers.size() != 0){
+            bw.write(computers.size());
+            for(Computer k : computers){
+                k.save(bw);
+            }
+        }
+        
+        
     }
 
     // // ///////////////////////////////////////////////////////////
