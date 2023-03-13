@@ -5,10 +5,15 @@ import store.*;
 import java.util.*;
 
 import java.io.FileReader;
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
 
 import javax.swing.JFrame;           // for main window
 import javax.swing.JOptionPane;      // for standard dialogs
@@ -40,9 +45,9 @@ import java.awt.Font;                // rich text in a JLabel or similar widget
 import java.awt.image.BufferedImage; // holds an image loaded from a file
 
 public class MainWin extends JFrame {
-    private Store store = new Store("Elsa");
+    private Store store;// = new Store("Elsa");
     private JLabel display = new JLabel();
-    
+    private File filename;
     
     public MainWin(String title) {
         
@@ -220,9 +225,9 @@ public class MainWin extends JFrame {
 
         ImageIcon xx = new ImageIcon("gui/toolbarPhotos/saveAs.png");
         JButton buttonSaveAs = new JButton(xx);    
-        buttonViewOptions.setActionCommand("Save as File Name");
-        buttonViewOptions.addActionListener(event -> onSaveAsClick());
-        buttonViewOptions.setToolTipText("Use this to save current store data with prefered name ");
+        buttonSaveAs.setActionCommand("Save as File Name");
+        buttonSaveAs.addActionListener(event -> onSaveAsClick());
+        buttonSaveAs.setToolTipText("Use this to save current store data with prefered name ");
         toolbar.add(buttonSaveAs);
         
         
@@ -232,20 +237,50 @@ public class MainWin extends JFrame {
     
     }
         protected void onNewClick(){
-
+            
+            String name = JOptionPane.showInputDialog(this,"New Store Name");
+            store = new Store(name);
         }
         protected void onOpenClick(){
 
         }
         protected void onSaveClick(){
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("io/testStore.txt"))) {
-                store.save(bw);
-            } catch (Exception e) {
-                System.err.println("Failed to write: " + e); System.exit(-1);
+            if (filename == null){
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("io/default.elsa"))) {
+                    store.save(bw);
+                } catch (Exception e) {
+                    System.err.println("Failed to write: " + e); System.exit(-1);
+                }
+            
+            }else{
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+                    store.save(bw);
+                } catch (Exception e) {
+                    System.err.println("Failed to write: " + e); System.exit(-1);
+                }
             }
+            filename = null;
         }
         protected void onSaveAsClick(){
-  
+            FileSystemView fsv = FileSystemView.getFileSystemView();
+            
+            final JFileChooser fc = new JFileChooser("io");
+            
+            FileFilter filter = new FileNameExtensionFilter("Elsa", "elsa");
+            fc.addChoosableFileFilter(filter);
+            fc.setFileFilter(filter);
+           
+
+            int result = fc.showSaveDialog(this);
+            if(result == JFileChooser.APPROVE_OPTION){
+                filename = fc.getSelectedFile();
+                if(!filename.getAbsolutePath().endsWith(".elsa")){
+                    filename = new File(filename.getAbsolutePath() + ".elsa");
+                }
+                onSaveClick();
+            }
+
+            
         }
 
 
