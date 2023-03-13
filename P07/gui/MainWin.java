@@ -76,6 +76,7 @@ public class MainWin extends JFrame {
         JMenuItem viewOption = new JMenuItem("Option");
         JMenuItem viewComputer = new JMenuItem("Computer");
         JMenuItem viewOrder = new JMenuItem("Order");
+        
         JMenu     help = new JMenu("Help");
         JMenuItem about = new JMenuItem("About");
 
@@ -106,6 +107,8 @@ public class MainWin extends JFrame {
         menubar.add(file);
         menubar.add(insert);
         menubar.add(view);
+        menubar.add(help);
+
         setJMenuBar(menubar);
 
         setVisible(true);
@@ -338,8 +341,42 @@ public class MainWin extends JFrame {
         }
 
         protected void onAboutClick(){
+        //   try {
+        //     //BufferedImage myPicture = ImageIO.read(new File("128px-Pyramidal_matches.png"));
+        //     // logo = new JLabel(new ImageIcon(myPicture));
+            
+        // } catch(IOException e) {
+        // }
+            Canvas logo = new Canvas();
+            JLabel title = new JLabel("<html>"
+            + "<p><font size=+4>ELSA</font></p>"
+            + "<p>Version 1.0</p>"
+            + "</html>",
+            SwingConstants.CENTER);
 
-        }
+            JLabel artists = new JLabel("<html>"
+            + "<br/><p>Copyright 2023 by Jesse McNary</p>"
+            + "<p>Licensed under the Apache License, Version 2.0</p><br/>"
+            + "<p></p>"
+            + "<p><font size=-2></font></p>"
+            + "<p>Customer Toolbar Image</p><p>https://icons8.com/icons/set/top-toolbar</p><br>"
+            + "<p>Options Toolbar Image</p><p>www.123rf.com/clipart-vector/computer_ram.html</p><br>"
+            + "<p>View Customer Toolbar Image</p><p>clipart-library.com/clip-art/playground-silhouette-25.htmr</p><br>"
+            + "<p>View Options Toolbar Image</p><p>https://create.vista.com/vectors/Computer-hardware/</p><br>"
+            + "<p>View Computer Toolbar Image</p><p>https://www.deviantart.com/flat-icons/art/Flat-Shadow-Computer-Icon-Multiple-Colors-557618709</p><br>"
+            + "<p>Logo Image with the help of George F Rice</p><p>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</p><br>"
+            + "<p><font size=-2></font></p>"
+            + "</html>");
+            
+            JOptionPane.showMessageDialog(this, new Object[]{logo,title,artists},"ELSA", JOptionPane.PLAIN_MESSAGE);
+            //JOptionPane.showMessageDialog(this, logo, title, artists,"ELSA", JOptionPane.PLAIN_MESSAGE);
+          
+        //  JOptionPane.showMessageDialog(this, 
+        //      new Object[]{logo, title, artists},
+        //      "The Game of Nim",
+        //      JOptionPane.PLAIN_MESSAGE
+        //  );
+        }  
     }
     
     // Listeners
