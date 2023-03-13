@@ -242,6 +242,27 @@ public class MainWin extends JFrame {
             store = new Store(name);
         }
         protected void onOpenClick(){
+            
+            final JFileChooser fc = new JFileChooser("io");
+            
+            FileFilter filter = new FileNameExtensionFilter("Elsa Files", "elsa");
+            fc.addChoosableFileFilter(filter);
+            fc.setFileFilter(filter);
+
+            int result = fc.showOpenDialog(this);
+            if(result == JFileChooser.APPROVE_OPTION){
+                filename = fc.getSelectedFile();
+                try(BufferedReader br = new BufferedReader(new FileReader(filename))){
+                    store = new Store(br);
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(this, "Unable to open " +  filename + "\n" + e ,"Failed", 
+                    JOptionPane.ERROR_MESSAGE);
+                }
+               
+            }
+
+
+
 
         }
         protected void onSaveClick(){

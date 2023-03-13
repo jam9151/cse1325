@@ -26,6 +26,11 @@ public class Customer{
         bw.write(email + '\n');
     }
 
+    public Customer(BufferedReader br) throws IOException{
+        name = br.readLine();
+        email = br.readLine();
+    }
+
 
     @Override
     public String toString(){

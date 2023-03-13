@@ -21,11 +21,23 @@ public class Computer{
     public void save(BufferedWriter bw) throws IOException{
         bw.write(name + '\n');
         bw.write(model + '\n');
-        bw.write(options.size() + '\n');
+        System.out.println(options.size());
+        bw.write("" + options.size() + '\n');
         for(Option i : options){
             i.save(bw);
         }
     }
+    
+    public Computer(BufferedReader br) throws IOException{
+        name = br.readLine();
+        model = br.readLine();
+        int size = Integer.parseInt(br.readLine());
+        while(size-- > 0){
+            options.add(new Option(br));
+        }
+
+    }
+
     public void addOption(Option option){
         options.add(option);
 

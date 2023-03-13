@@ -25,6 +25,12 @@ public class Option{
         bw.write("" + cost + '\n');
     }
 
+    public Option(BufferedReader br) throws IOException{
+        name = br.readLine();
+        cost = Long.parseLong(br.readLine());
+
+    }
+
     public long cost(){
         return (cost / 100);
     }
