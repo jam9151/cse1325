@@ -26,7 +26,7 @@ public class Option{
         String s = sb.toString();
         return s;
     }
-
+    @Override
     public boolean equals(Object o){
         if(this == o){
             return true;

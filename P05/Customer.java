@@ -20,11 +20,16 @@ public class Customer{
         String s = sb.toString();
         return s;
     }
+     @Override
     public boolean equals(Object o){
         if(this == o){
             return true;
         }
         
+        if (this.getClass() != o.getClass()){
+            return false;
+        }
+
         if((o == null) || !(o instanceof Customer)){
             return false;
         }

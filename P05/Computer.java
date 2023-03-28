@@ -34,6 +34,7 @@ public class Computer{
         String concatString = sb.toString();
         return concatString;
     }
+    @Override
     public boolean equals(Object o){
         if(this == o){
             return true;
