@@ -23,8 +23,12 @@ public class Order{
         computers.add(computer);
 
     }
-    public Order(BufferedWriter bw){
-    
+    public Order(BufferedReader br)throws IOException{
+        
+    }
+
+    public void save(BufferedWriter bw)throws IOException{
+
     }
 
     public long cost(){

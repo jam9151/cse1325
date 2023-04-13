@@ -3,6 +3,11 @@ package gui;
 
 import store.*;
 import java.util.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JTextField;
+
+
 
 import java.io.FileReader;
 import java.io.File;
@@ -43,6 +48,7 @@ import java.awt.FlowLayout;          // layout manager for About dialog
 import java.awt.Color;               // the color of widgets, text, or borders
 import java.awt.Font;                // rich text in a JLabel or similar widget
 import java.awt.image.BufferedImage; // holds an image loaded from a file
+
 
 public class MainWin extends JFrame {
     private Store store;// = new Store("Elsa");
@@ -166,7 +172,18 @@ public class MainWin extends JFrame {
         buttonAddComputer.addActionListener(event -> onInsertComputerClick());
         toolbar.add(buttonAddComputer);
         
+       
+        toolbar.add(Box.createHorizontalStrut(10));
+        //insert order
+        ImageIcon insertOrder = new ImageIcon("gui/toolbarPhotos/newOrder.png");
+        JButton buttonnewOrders = new JButton(insertOrder);
+        buttonnewOrders.setActionCommand("Add New Orders");
+        buttonnewOrders.addActionListener(event -> onInsertOrderClick());
+        buttonnewOrders.setToolTipText("Use this to view all current orders");
+        toolbar.add(buttonnewOrders); 
+        
         toolbar.add(Box.createHorizontalStrut(30));
+        
         //View Customer Button
         ImageIcon iv = new ImageIcon("gui/toolbarPhotos/viewCustomer.png");
         
@@ -188,6 +205,7 @@ public class MainWin extends JFrame {
         toolbar.add(buttonViewOptions);
         
         toolbar.add(Box.createHorizontalStrut(10));
+        
         //View Computers
         ImageIcon vi = new ImageIcon("gui/toolbarPhotos/viewComputers.png");
         JButton buttonViewComputers = new JButton(vi);    
@@ -196,7 +214,18 @@ public class MainWin extends JFrame {
         buttonViewComputers.setToolTipText("Use this to view all current computers");
         toolbar.add(buttonViewComputers);
         
+        //View Order
+        toolbar.add(Box.createHorizontalStrut(10));
+        
+        ImageIcon viewOrderIcon = new ImageIcon("gui/toolbarPhotos/order.png");
+        JButton buttonViewOrders = new JButton(viewOrderIcon);
+        buttonViewOrders.setActionCommand("View All Orders");
+        buttonViewOrders.addActionListener(event -> onViewClick(Record.ORDER));
+        buttonViewOrders.setToolTipText("Use this to view all current orders");
+        toolbar.add(buttonViewOrders); 
+        
         toolbar.add(Box.createHorizontalStrut(30));
+        
         //New
         ImageIcon vii = new ImageIcon("gui/toolbarPhotos/new.jpg");
         JButton buttonNew = new JButton(vii);    
@@ -239,9 +268,6 @@ public class MainWin extends JFrame {
         getContentPane().add(toolbar, BorderLayout.PAGE_START);
     
     }
-
-
-
         protected void onNewClick(){
             
             String name = JOptionPane.showInputDialog(this,"New Store Name");
@@ -266,9 +292,6 @@ public class MainWin extends JFrame {
                 }
                
             }
-
-
-
 
         }
         protected void onSaveClick(){
@@ -309,8 +332,6 @@ public class MainWin extends JFrame {
 
             
         }
-
-
         protected void onQuitClick(){
             System.exit(0);
         }
@@ -318,12 +339,30 @@ public class MainWin extends JFrame {
         protected void onInsertCustomerClick(){
             
             try{
-                String name = JOptionPane.showInputDialog(this,"Customer name");
-                String email = JOptionPane.showInputDialog(this,"Customer email");
                 
-                //JOptionPane.showMessageDialog(null, "Hello "+name + "\nYour email is " + email);
-                Customer customer = new Customer(name, email);
-                store.add(customer);
+                JTextField nameField = new JTextField("");
+                JTextField emailField = new JTextField("");
+                
+                String name = "";
+                String email = "";
+
+
+                JLabel nameLabel = new JLabel("Name");
+
+                JLabel emailLabel = new JLabel("<HTML><br/>Email</HTML>");
+
+                Object[] objects = {
+                    nameLabel, nameField,
+                    emailLabel, emailField 
+                };
+                int button = JOptionPane.showConfirmDialog(this,objects,"New Customer",
+                JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, new ImageIcon("gui/toolbarPhotos/customer.jpg"));
+
+                if(button == JOptionPane.OK_OPTION){
+                    name = nameField.getText();
+                    email = emailField.getText();
+                    store.add(new Customer(name,email));
+                }
             }catch(IllegalArgumentException e){
                 System.err.println(e.getMessage());
             }
@@ -331,40 +370,69 @@ public class MainWin extends JFrame {
         }
 
         protected void onInsertOptionClick(){
-            String name = JOptionPane.showInputDialog(this,"Option name");
-            String priceStr = JOptionPane.showInputDialog(this,"Option price");
+            
 
-            double price = Double.parseDouble(priceStr);
-            long priceLong = (long) price;
-    
-            priceLong = priceLong * 100;
-            //JOptionPane.showMessageDialog(this, "Option "+name + "\nPrice " + priceLong);
-            Option option = new Option(name, priceLong);
-            store.add(option);
+            JTextField nameField = new JTextField();
+            JTextField priceField = new JTextField();
 
+            JLabel nameLabel = new JLabel("Name");
+            JLabel priceLabel = new JLabel("<HTML><br/>Price</HTML>");
+
+            Object[] objects = {
+                nameLabel, nameField,
+                priceLabel,priceField
+                };
+            int button = JOptionPane.showConfirmDialog(this,objects,"New Option", 
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("gui/toolbarPhotos/options.jpg"));
+
+            if(button == JOptionPane.OK_OPTION){
+                
+                String name = nameField.getText();
+                
+                double price = Double.parseDouble(priceField.getText());
+                
+                long priceLong = (long) price;
+                
+                priceLong = priceLong * 100;
+                
+                store.add(new Option(name,priceLong));
+            }
         }
-        
         protected void onInsertComputerClick(){
             
-            String name = JOptionPane.showInputDialog(this,"Computer Name");
-            String model = JOptionPane.showInputDialog(this,"Computer Model");
-            Computer computer = new Computer(name, model);
-        
+            JTextField nameField = new JTextField();
+            JTextField modelField = new JTextField();
             JComboBox cb = new JComboBox<Object>(store.options());
-            int input = 0;
-            while (input != JOptionPane.CANCEL_OPTION){
+
+
+            JLabel nameLabel = new JLabel("Computer Name");
+            JLabel modelLabel = new JLabel("<HTML><br/>Model ID</HTML>");
+            JLabel optionLabel = new JLabel("<HTML><br/>Options</HTML>");
+            
+            Object[] objects = {
+                nameLabel, nameField,
+                modelLabel, modelField
+            };
+            
+            int button = JOptionPane.showConfirmDialog(this,objects,"New Computer", 
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("gui/toolbarPhotos/computer.png"));
+            
+            if (button == JOptionPane.OK_OPTION){
+                Computer c = new Computer(nameField.getText(), modelField.getText());
+                int input = 0;
+                while (input != JOptionPane.CANCEL_OPTION){
                 
-                input = JOptionPane.showConfirmDialog(this,cb, "Select Options", 
-                JOptionPane.OK_CANCEL_OPTION);
+                    input = JOptionPane.showConfirmDialog(this,cb, "Select Options", 
+                    JOptionPane.OK_CANCEL_OPTION);
                 
-                if (input == JOptionPane.OK_OPTION){
-                    computer.addOption((Option)cb.getSelectedItem());
+                    if (input == JOptionPane.OK_OPTION){
+                        c.addOption((Option)cb.getSelectedItem());
+                    }
+
                 }
 
-                //System.out.println(computer);   
+                store.add(c);
             }
-            store.add(computer);        
-
         }
 
         protected void onViewClick(Record r){
@@ -486,9 +554,11 @@ public class MainWin extends JFrame {
             + "<p><font size=-2></font></p>"
             + "<p>Customer Toolbar Image</p><p>https://icons8.com/icons/set/top-toolbar</p><br>"
             + "<p>Options Toolbar Image</p><p>www.123rf.com/clipart-vector/computer_ram.html</p><br>"
+            + "<p>Order Toolbar Image</p><p>https://www.vecteezy.com/vector-art/2555448-clicking-cart-order-shopping-or-payment-mobile-banking-line-style-icon</p><br>"
             + "<p>View Customer Toolbar Image</p><p>clipart-library.com/clip-art/playground-silhouette-25.htmr</p><br>"
             + "<p>View Options Toolbar Image</p><p>https://create.vista.com/vectors/Computer-hardware/</p><br>"
             + "<p>View Computer Toolbar Image</p><p>https://www.deviantart.com/flat-icons/art/Flat-Shadow-Computer-Icon-Multiple-Colors-557618709</p><br>"
+            + "<p>View Orders Toolbar Image</p><p>https://www.flaticon.com/free-icon/order_3500833?term=order&page=1&position=8&origin=tag&related_id=3500833</p><br>"            
             + "<p>New Store Toolbar Image</p><p>https://iconarchive.com/show/paradise-icons-by-fixicon/toolbar-folder-add-icon.html</p><br>"
             + "<p>Open File Toolbar Image</p><p>https://freeiconshop.com/icon/folder-open-icon-outline-filled/</p><br>"
             + "<p>Save Toolbar Image</p><p>//https://www.flaticon.com/free-icon/save-file_4856668 </p><br>"
@@ -552,156 +622,4 @@ public class MainWin extends JFrame {
 
     }
     
-    // Listeners
-    
-    // protected void onNewGameClick() {         // Create a new game
-    //     else = new Elsa();
-    //     setSticks();
-    //     msg.setFont(new JLabel().getFont());    // Reset to default font
-    // }
-    
-    // protected void onButtonClick(int button) {  // Select 1, 2, or 3 sticks from pile
-    //     try {
-    //         // Catch the "impossible" out of sticks exception
-    //         nim.takeSticks(button);
-    //         setSticks();
-    //     } catch(Exception e) {
-    //         sticks.setText("FAIL: " + e.getMessage() + ", start new game");
-    //     }
-    // }
-            
-    // protected void onComputerPlayerClick() {   // Enable / disable computer player
-    //     setSticks();
-    //     // Java Swing requires action to visually indicate enabled / disabled button
-    //     computerPlayer.setBorder(computerPlayer.isSelected() ? BorderFactory.createLineBorder(Color.black) : null);
-    // }
-    // protected void onRulesClick() {             // Show the rules
-    //     String s = "The Rules of Nim\n\nCopyright 2017-2023 by George F. Rice - CC BY 4.0\n\n" +
-    //         "The two players alternate taking 1 to 3 sticks from the pile.\n" +
-    //         "The goal is to force your opponent to take the last stick (called misère rules).\n" +
-    //         "If the computer button is up, it's a two player game. If down, the computer is always Player 2.)";
-    //     JOptionPane.showMessageDialog(this, s, "The Rules of Nim", JOptionPane.PLAIN_MESSAGE);
-    // }
-    // protected void onAboutClick() {                 // Display About dialog
-    //     JLabel logo = null;
-    //     try {
-    //         BufferedImage myPicture = ImageIO.read(new File("128px-Pyramidal_matches.png"));
-    //         logo = new JLabel(new ImageIcon(myPicture));
-    //     } catch(IOException e) {
-    //     }
-        
-    //     JLabel title = new JLabel("<html>"
-    //       + "<p><font size=+4>Nim</font></p>"
-    //       + "<p>Version 1.4J</p>"
-    //        + "</html>",
-    //       SwingConstants.CENTER);
-
-    //     JLabel artists = new JLabel("<html>"
-    //       + "<br/><p>Copyright 2017-2023 by George F. Rice</p>"
-    //       + "<p>Licensed under Gnu GPL 3.0</p><br/>"
-    //       + "<p>Logo by M0tty, licensed under CC BY-SA 3.0</p>"
-    //       + "<p><font size=-2>https://commons.wikimedia.org/wiki/File:Pyramidal_matches.svg</font></p>"
-    //       + "<p>Robot by FreePik.com, licensed for personal</p><p>and commercial purposes with attribution</p>"
-    //       + "<p><font size=-2>https://www.freepik.com/free-vector/grey-robot-silhouettes_714902.htm</font></p>"
-    //       + "</html>");
-          
-    //      JOptionPane.showMessageDialog(this, 
-    //          new Object[]{logo, title, artists},
-    //          "The Game of Nim",
-    //          JOptionPane.PLAIN_MESSAGE
-    //      );
-    //  }
-
-/*
-    // This is an alternate About dialog using JDialog instead of JOptionPane
-    
-    protected void onAboutClick() {                 // Display About dialog
-        JDialog about = new JDialog();
-        about.setLayout(new FlowLayout());
-        about.setTitle("The Game of Nim");
-        
-        try {
-            BufferedImage myPicture = ImageIO.read(new File("128px-Pyramidal_matches.png"));
-            JLabel logo = new JLabel(new ImageIcon(myPicture));
-            about.add(logo);
-        } catch(IOException e) {
-        }
-        
-        JLabel title = new JLabel("<html>"
-          + "<p><font size=+4>Nim</font></p>"
-          + "</html>");
-        about.add(title);
-
-        JLabel artists = new JLabel("<html>"
-          + "<p>Version 1.4J</p>"
-          + "<p>Copyright 2017-2023 by George F. Rice</p>"
-          + "<p>Licensed under Gnu GPL 3.0</p>"
-          + "<p>Logo by M0tty, licensed under CC BY-SA 3.0</p>"
-          + "<p><font size=-2>https://commons.wikimedia.org/wiki/File:Pyramidal_matches.svg</font></p>"
-          + "<p>Robot by FreePik.com, licensed for personal</p><p>and commercial purposes with attribution</p>"
-          + "<p><font size=-2>https://www.freepik.com/free-vector/grey-robot-silhouettes_714902.htm</font></p>"
-          + "</html>");
-        about.add(artists);
-
-        JButton ok = new JButton("OK");
-        ok.addActionListener(event -> about.setVisible(false));
-        about.add(ok);
-        
-        about.setSize(450,400);
-        about.setVisible(true);
-     }
-*/
-       // Exit ELSA
-
-    // private void setSticks() {              // Update display, robot move
-    //     // s collects the status message
-    //     String s = "";
-        
-    //     // If the robot is enabled and it's their turn, move the robot
-    //     if(nim.sticksLeft() > 0) {
-    //         if(computerPlayer.isSelected() && nim.currentPlayer() == 2) {
-    //             int move = 1;
-    //             try {
-    //                 move = nim.optimalMove();
-    //             } catch(Exception e) {
-    //                 System.err.println("Invalid optimal move: " + e.getMessage());
-    //             }
-    //             s += "Robot plays " + move + ", ";
-    //             nim.takeSticks(move);
-    //         }
-    //     }
-        
-    //     // Report who's turn it is, or (if all sticks gone) who won
-        
-    //     if (nim.sticksLeft() > 0) {
-    //         s += "Player " + nim.currentPlayer() + "'s turn";
-    //     } else {
-    //         s += "Player " + nim.currentPlayer() +  " wins!";
-    //         msg.setFont(new Font("SansSerif", Font.BOLD, 18));
-    //     }
-        
-    //     // Display the collected status on the status bar
-    //     msg.setText(s);
-
-    //     // Update the visual display of sticks
-    //     s = "";
-    //     for(int i=0; i<nim.sticksLeft(); ++i) s += ("| ");
-    //     s += "  (" + (nim.sticksLeft()) + " sticks)";
-    //     sticks.setText(s);
-
-    //     // Set sensitivity of the human stick selectors so user can't make an illegal move
-    //     button1.setEnabled(nim.sticksLeft() > 0);
-    //     button2.setEnabled(nim.sticksLeft() > 1);
-    //     button3.setEnabled(nim.sticksLeft() > 2);
-    // }
-    
-       
-
-    // private JLabel sticks;                  // Display of sticks on game board
-    // private JLabel msg;                     // Status message display
-    // private JButton button1;                // Button to select 1 stick
-    // private JButton button2;                // Button to select 2 sticks
-    // private JButton button3;                // Button to select 3 sticks
-    // private JToggleButton computerPlayer;   // Button to enable robot
-
 
